@@ -55,6 +55,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = 'auth/C_Auth/login';
 $route['validate-login'] = 'auth/C_Auth/validateLogin';
+$route['logout'] = 'auth/C_Auth/logout';
 $route['mainmenu'] = 'main/C_Main';
 $route['user-management/dosen'] = 'auth/C_Auth/userManagementDosen';
 $route['user-management/mahasiswa'] = 'auth/C_Auth/userManagementMahasiswa';

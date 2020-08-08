@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_Auth extends MY_Controller {
+class C_Auth extends CI_Controller {
     public function __construct()
     {   
         parent::__construct();
@@ -22,12 +22,13 @@ class C_Auth extends MY_Controller {
         $user = $this->auth->getUserAuthByUsername($this->input->post('username'));
         if ($user !== null){
             if (password_verify($this->input->post('password'), $user['password'])){
-                if ($user['user_type'] === 1){
+                if ($user['user_type'] == 1){
                     $this->session->set_userdata([
                         'user_id' => $user['id_mst_auth'],
                         'user' => 'admin'
                     ]);
                 }
+
                 redirect(base_url('mainmenu'));
             } else {
                 redirect(base_url('login'));
@@ -37,6 +38,11 @@ class C_Auth extends MY_Controller {
             redirect(base_url('login'));
             $this->session->set_flashdata('msg', 'Username tidak di temukan');
         }
+    }
+
+    public function logout(){
+        $this->session->sess_destroy();
+        redirect(base_url('login'));
     }
 
     public function userManagementMahasiswa(){
