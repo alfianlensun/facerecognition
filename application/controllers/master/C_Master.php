@@ -28,6 +28,34 @@ class C_Master extends MY_Controller {
         ]);
     }
 
+    public function settingJadwal(){
+        $data['kelas'] = $this->master->getMasterKelas();
+        $data['semester'] = $this->master->getMasterSemester();
+        $data['dosen'] = $this->auth->getUserDosen();
+        $data['mk'] = $this->master->getMK();
+        $data['jadwal'] = $this->master->getJadwal();
+        
+        $this->render('moduls/jadwal/JadwalKuliah', $data);
+    }
+
+    public function createJadwalKuliah(){
+        $jadwal = $this->master->createJadwalKuliah();
+        $this->session->set_flashdata('msg', 'Data Berhasil Di Simpan');
+        redirect(base_url('jadwal/setting'));
+    }
+    public function updateJadwalKuliah(){
+        $jadwal = $this->master->updateJadwalKuliah();
+        $this->session->set_flashdata('msg', 'Data Berhasil Di Perbarui');
+        redirect(base_url('jadwal/setting'));
+    }
+
+    public function deleteJadwalKuliah(){
+        $delete = $this->master->deleteJadwalKuliah();
+        echo json_encode([
+            'success' => true
+        ]);
+    }
+
     public function createMasterKelas(){
         $kelas = $this->master->createMasterKelas();
         redirect(base_url('master/kelas'));
@@ -44,6 +72,8 @@ class C_Master extends MY_Controller {
             'success' => true
         ]);
     }
+
+    
 
     public function createMK(){
         $kelas = $this->master->createMK();
@@ -78,6 +108,8 @@ class C_Master extends MY_Controller {
             'success' => true
         ]);
     }
+
+    
 
     public function getJsonListMahasiswa(){
         echo json_encode($this->auth->getUserMahasiswa());

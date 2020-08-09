@@ -62,6 +62,7 @@ $route['user-management/mahasiswa'] = 'auth/C_Auth/userManagementMahasiswa';
 $route['master/semester'] = 'master/C_Master/semester';
 $route['master/kelas'] = 'master/C_Master/kelas';
 $route['master/mata-kuliah'] = 'master/C_Master/mk';
+$route['jadwal/setting'] = 'master/C_Master/settingJadwal';
 $route['absen/register'] = 'absen/C_Absen/registrasiAbsen';
 $route['absen/register/detail/(:any)'] = 'absen/C_Absen/registrasiAbsenDetail/$1';
 $route['absen/absensi/(:any)'] = 'absen/C_Absen/ambilAbsen/$1';

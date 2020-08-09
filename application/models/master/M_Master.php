@@ -88,4 +88,35 @@ class M_Master extends CI_Model {
                     ]);
         return $this->db->affected_rows();
     }
+
+    public function createJadwalKuliah(){
+        $this->db->insert('trx_jadwal_kuliah', $this->input->post());
+    }
+
+    public function updateJadwalKuliah(){
+        $datapost = $this->input->post();
+        unset($datapost['id_trx_jadwal_kuliah']);
+        $this->db->where('id_trx_jadwal_kuliah', $this->input->post('id_trx_jadwal_kuliah'))
+                    ->update('trx_jadwal_kuliah', $datapost);
+    }
+
+    public function deleteJadwalKuliah(){
+        $this->db->where('id_trx_jadwal_kuliah', $this->input->post('ids'))  
+                    ->update('trx_jadwal_kuliah', [
+                        'active' => 0
+                    ]);
+        return $this->db->affected_rows();
+    }
+
+    public function getJadwal(){
+        return $this->db->select('*')
+                    ->from('trx_jadwal_kuliah as a')
+                    ->join('mst_semester as b', 'a.id_mst_semester = b.id_mst_semester')
+                    ->join('mst_kelas as c', 'a.id_mst_kelas = c.id_mst_kelas')
+                    ->join('mst_dosen as d', 'a.id_mst_dosen = d.id_mst_dosen')
+                    ->join('mst_mata_kuliah as e', 'a.id_mst_mata_kuliah = e.id_mst_mata_kuliah')
+                    ->where('a.active', 1)
+                    ->order_by('day', 'desc')
+                    ->get()->result_array();
+    }
 }

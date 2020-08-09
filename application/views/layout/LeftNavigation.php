@@ -42,7 +42,7 @@
     </div>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="<?= base_url('Jadwal') ?>">
+    <a class="nav-link" href="<?= base_url('jadwal/setting') ?>">
     <i class="fas fa-fw fa-chart-area"></i>
     <span>Pengaturan Jadwal</span></a>
 </li>
