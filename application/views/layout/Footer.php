@@ -1,6 +1,5 @@
 
 <script>
-const base_url = '<?= base_url() ?>'
 function renderEditData(data){
     if (data === null) return false
     for (const key of Object.keys(data)){
