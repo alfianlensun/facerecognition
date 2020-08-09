@@ -14,7 +14,7 @@
                                 <?php $this->load->view('layout/components/card', [
                                     'title' => 'Registrasi Wajah',
                                     'detail' => 'Registrasi wajah untuk proses absensi',
-                                    'route' => 'absen/register/detail/2',
+                                    'route' => 'absen/register',
                                     'icon' => 'grin-alt'
                                 ]) ?>
                             </div>
