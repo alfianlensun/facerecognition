@@ -12,6 +12,14 @@
                         <div class="row">
                             <div class="col-5">
                                 <?php $this->load->view('layout/components/card', [
+                                    'title' => 'Absensi',
+                                    'detail' => 'Absensi Mahasiswa',
+                                    'route' => 'absen',
+                                    'icon' => 'fa-grin-alt'
+                                ]) ?>
+                            </div>
+                            <div class="col-5">
+                                <?php $this->load->view('layout/components/card', [
                                     'title' => 'Registrasi Wajah',
                                     'detail' => 'Registrasi wajah untuk proses absensi',
                                     'route' => 'absen/register',
