@@ -130,7 +130,7 @@
             const selected = jsondata.filter(item => {
                 return item.id_mst_mahasiswa == ids
             })
-            console.log(selected)
+            
             
             renderEditData(selected[0])
             $('#modalEdit').modal('show')

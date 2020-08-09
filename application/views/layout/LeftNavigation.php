@@ -23,7 +23,7 @@
     Fitur
 </div>
 <li class="nav-item">
-    <a class="nav-link" href="<?= base_url('absen/absensi') ?>">
+    <a class="nav-link" href="<?= base_url('absen') ?>">
     <i class="fas fa-fw fa-fingerprint"></i>
     <span>Absensi</span></a>
 </li>

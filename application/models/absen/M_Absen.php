@@ -35,4 +35,15 @@ class M_Absen extends CI_Model {
             ]);
         }
     }
+
+    public function getAbsenRegister(){
+        return $this->db->select('*')
+                    ->from('mst_mahasiswa as a')
+                    ->join('trx_facedata as b','a.id_mst_auth = b.id_mst_auth')
+                    ->where('a.status_daftar_absensi', 1)
+                    ->where('b.filename', 'register1.jpg')
+                    ->where('a.active', 1)
+                    ->where('b.active', 1)
+                    ->get()->result_array();
+    }
 }

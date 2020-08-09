@@ -64,4 +64,5 @@ $route['master/kelas'] = 'master/C_Master/kelas';
 $route['master/mata-kuliah'] = 'master/C_Master/mk';
 $route['absen/register'] = 'absen/C_Absen/registrasiAbsen';
 $route['absen/register/detail/(:any)'] = 'absen/C_Absen/registrasiAbsenDetail/$1';
-$route['absen/absensi'] = 'absen/C_Absen/ambilAbsen';
+$route['absen/absensi/(:any)'] = 'absen/C_Absen/ambilAbsen/$1';
+$route['absen'] = 'absen/C_Absen/pilihRuanganAbsen';

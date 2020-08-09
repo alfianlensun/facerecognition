@@ -1,3 +1,9 @@
+<style>
+    canvas.canvasimg{
+        position: relative;
+    }
+</style>
+
 <div class="bg-primary" id="loader"  style="
     position: absolute;
     z-index: 100;
@@ -5,6 +11,7 @@
     color: #fff;
     height: 100vh;
     width: 100vw;
+    display:none;
 ">
     <div style="
         width: 100%;
@@ -24,15 +31,18 @@
         height: 100vh;
     "
 >
-    <div class="col-8 pl-4" 
+    <div class="col-7 pl-4" 
         id="wrapper"
     >
+    
         <div style="
             width: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content:center;
         ">
+            <a href="<?= base_url('mainmenu') ?>" class="btn btn-info mt-4" style="align-self: flex-start;"><i class="fa fa-chevron-left"></i> Ke Main Menu</a>
             <div
                 class="mt-4"
                 id="videowrapper"
@@ -56,9 +66,9 @@
             </div>
         </div>
     </div>
-    <div class="col-4">
-        <div class="row pt-4">
-            <div class="col-12 ">
+    <div class="col-5" style="border-left: 1px solid #fff">
+        <div class="row pt-4 pl-4">
+            <div class="col-12 " id="indikatormsg">
                 <div style="
                     display: flex;
                     height: 100%;
@@ -71,6 +81,51 @@
                     <div id="messageFaceDetectionDetail" class="text-white">Pastikan wajah anda tetap berada dalam jangkauan kamera sampai absen berhasil di lakukan</div>
                 </div>
             </div>
+            <div class="col-12 mt-4 pt-4" id="detailuserdetection" style="display:none">
+                <h4 class="text-white" id="msg-nm">Alfian Lenun</h4>
+                <h6 class="text-white" style="line-height: 30px;">Anda telah berhasil melakukan absen masuk</h6>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-3 text-white">
+                                Mata Kuliah
+                            </div>
+                            <div class="col">
+                                <h6 class="text-white " id="mst-mk"></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-3 text-white">
+                                Tanggal
+                            </div>
+                            <div class="col">
+                                <h6 class="text-white" id="msg-tanggal"></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-3 text-white text-left">
+                                Jam 
+                            </div>
+                            <div class="col">
+                                <h6 class="text-white" id="msg-jam"> </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            
+                <div class="row">
+                    <div class="col-12 pr-4 mt-4" style="position: relative;">
+                        <canvas id="canvas" class="canvasimg" style="width: 352px; height: 288px; background-color: #6588f1; border-radius: 20px;"> 
+                    
+                        </canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -78,7 +133,7 @@
 <script src="<?= base_url('assets/js/app.js') ?>"></script>
 <script>
     let scanning = false
-
+    
     onFaceApiReady = async () => {
         const labeledFaceDescriptors = await loadAllUserImage();
         window.faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
@@ -96,7 +151,17 @@
             })
 
             const whoisit = result[0]._label
-
+            
+            if (whoisit !== 'unknown'){
+                const mahasiswa = window.allmhs.filter(mhs => {
+                    return mhs.id_mst_mahasiswa == whoisit
+                })   
+                const canvas = document.getElementById(`canvas`)
+                const context1 = canvas.getContext('2d')
+                
+                context1.drawImage(video, 0,0,canvas.width, canvas.height)  
+                console.log(mahasiswa)
+            }
 
             setTimeout(() => {
                 scanning = false
@@ -104,6 +169,7 @@
             
         }  
     }
+    
 
     let status = null
     function faceStatus(stt){
@@ -121,32 +187,35 @@
     }
 
     async function loadAllUserImage(){
-        const users = [
-            {
-                id_mst_mahasiswa: 1,
-                nama_mahasiswa: 'ALfian',
-                filename: 'register1.jpg',
-            },
-            {
-                id_mst_mahasiswa: 2,
-                nama_mahasiswa: 'Oma',
-                filename: 'register1.jpg',
-            }
-        ]
+        try {
+            const users = await new Promise((rs, rj) => {
+                $.ajax({
+                    url: '/absen/C_Absen/getAbsenRegister',
+                    method: 'get',
+                    dataType: 'json',
+                    success: resp => rs(resp),
+                    error: err => rj(err)
+                })
+            })
 
-        let descriptions = []
-        // let label = []
-        for (const user of users){
-            const img = await faceapi.fetchImage(`/uploaddata/registerabsensi/${user.id_mst_mahasiswa}/${user.filename}`)
-            const detection = await faceapi.detectSingleFace(img)
-                                            .withFaceLandmarks()
-                                            // .withFaceExpressions()
-                                            .withFaceDescriptor()
-            // console.log(detection.descriptor)
-            descriptions.push(new faceapi.LabeledFaceDescriptors(user.id_mst_mahasiswa.toString(), [detection.descriptor]))
+            window.allmhs = users
+
+            let descriptions = []
+            // let label = []
+            for (const user of users){
+                const img = await faceapi.fetchImage(`/uploaddata/registerabsensi/${user.id_mst_mahasiswa}/${user.filename}`)
+                const detection = await faceapi.detectSingleFace(img)
+                                                .withFaceLandmarks()
+                                                // .withFaceExpressions()
+                                                .withFaceDescriptor()
+                // console.log(detection.descriptor)
+                descriptions.push(new faceapi.LabeledFaceDescriptors(user.id_mst_mahasiswa.toString(), [detection.descriptor]))
+            }
+            // console.log(label)
+            return descriptions
+        } catch(err){
+            console.log(err)
         }
-        // console.log(label)
-        return descriptions
 
     }
 </script>
