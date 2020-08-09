@@ -81,6 +81,13 @@ class M_Auth extends CI_Model {
                         ->result_array();
     }
 
+    public function getUserMahasiswaByIdAuth($id){
+        return $this->db->where('active', 1)
+                        ->where('id_mst_auth', $id)
+                        ->get('mst_mahasiswa')
+                        ->row_array();
+    }
+
     public function createUserMahasiswa(){
         $password = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
         $this->db->insert('mst_auth', [

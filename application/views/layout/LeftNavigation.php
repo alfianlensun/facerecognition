@@ -22,7 +22,11 @@
 <div class="sidebar-heading">
     Fitur
 </div>
-
+<li class="nav-item">
+    <a class="nav-link" href="<?= base_url('absen/absensi') ?>">
+    <i class="fas fa-fw fa-fingerprint"></i>
+    <span>Absensi</span></a>
+</li>
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">

@@ -1,4 +1,4 @@
-<div  style="cursor:pointer; width: 100%" onclick="return window.location = '<?= base_url('user-management') ?>'">
+<div  style="cursor:pointer; width: 100%" onclick="return window.location = '<?= base_url($route) ?>'">
     <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
         <div class="row no-gutters align-items-center">

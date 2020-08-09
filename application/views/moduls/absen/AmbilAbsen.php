@@ -1,32 +1,75 @@
-<div class="row">
-    <div class="col-8" 
+<div class="bg-primary" id="loader"  style="
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    color: #fff;
+    height: 100vh;
+    width: 100vw;
+">
+    <div style="
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    ">
+        <h1 style="color: #fff;">Mohon Tunggu</h1>
+        <h5 style="color: #fff;">Mengambil data mahasiswa <i class="fa fa-spin fa-spinner"></i></h5>
+    </div>
+</div>
+<div class="row bg-primary"
+    style="
+        overflow-x: hidden;
+        height: 100vh;
+    "
+>
+    <div class="col-8 pl-4" 
         id="wrapper"
     >
-        <div
-            class="mt-2"
-            id="videowrapper"
-            style="
-                width: 720px;
-                heigth: 560px;
-                overflow: hidden;
-            "
-        >
-            <video id="video"
-                autoplay 
-                muted
+        <div style="
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content:center;
+        ">
+            <div
+                class="mt-4"
+                id="videowrapper"
                 style="
-                    transform: scaleX(-1);
-                    height: 100%;
-                    width: 100%;
+                    borderRadius: 20px;
+                    width: 720px;
+                    position: relative;
+                    heigth: 560px;
+                    overflow: hidden;
                 "
-            ></video>
+            >
+                <video id="video"
+                    autoplay 
+                    muted
+                    style="
+                        position: relative;
+                        height: 100%;
+                        width: 100%;
+                    "
+                ></video>
+            </div>
         </div>
     </div>
     <div class="col-4">
         <div class="row pt-4">
-            <div class="col-12">
-                <h4 id="messageFaceDetection">Hadapkan wajah anda ke kamera</h4>
-                <div id="messageFaceDetectionDetail">Pastikan wajah anda tetap berada dalam jangkauan kamera sampai absen berhasil di lakukan</div>
+            <div class="col-12 ">
+                <div style="
+                    display: flex;
+                    height: 100%;
+                    width: 100%;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items:flex-start;
+                ">
+                    <h4 id="messageFaceDetection" class="text-white">Hadapkan wajah anda ke kamera</h4>
+                    <div id="messageFaceDetectionDetail" class="text-white">Pastikan wajah anda tetap berada dalam jangkauan kamera sampai absen berhasil di lakukan</div>
+                </div>
             </div>
         </div>
     </div>
@@ -36,9 +79,29 @@
 <script>
     let scanning = false
 
-    function onFaceDetection(faceData){
-        if (scanning === false){
-            console.log('ok')   
+    onFaceApiReady = async () => {
+        const labeledFaceDescriptors = await loadAllUserImage();
+        window.faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
+        window.loadedImage = true
+        $('#loader').hide()
+    }
+
+    function onFaceDetection(faceData, resizeDetections){
+        if (scanning === false && window.loadedImage){
+            scanning = true
+            const faceMatcher = window.faceMatcher
+            
+            const result = resizeDetections.map(d => {
+                return faceMatcher.findBestMatch(d.descriptor)
+            })
+
+            const whoisit = result[0]._label
+
+
+            setTimeout(() => {
+                scanning = false
+            }, 5000);
+            
         }  
     }
 
@@ -66,20 +129,24 @@
             },
             {
                 id_mst_mahasiswa: 2,
-                nama_mahasiswa: 'Mark',
+                nama_mahasiswa: 'Oma',
                 filename: 'register1.jpg',
             }
         ]
 
         let descriptions = []
+        // let label = []
         for (const user of users){
             const img = await faceapi.fetchImage(`/uploaddata/registerabsensi/${user.id_mst_mahasiswa}/${user.filename}`)
             const detection = await faceapi.detectSingleFace(img)
                                             .withFaceLandmarks()
-                                            .withFaceExpressions()
-            // descriptions
+                                            // .withFaceExpressions()
+                                            .withFaceDescriptor()
+            // console.log(detection.descriptor)
+            descriptions.push(new faceapi.LabeledFaceDescriptors(user.id_mst_mahasiswa.toString(), [detection.descriptor]))
         }
-
+        // console.log(label)
+        return descriptions
 
     }
 </script>

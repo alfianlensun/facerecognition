@@ -34,7 +34,9 @@
         src: url('/assets/fonts/NeoSans/NeoSansBold.otf');
     }
     canvas{
-        left: 15px;
+        top: 0;
+        left: 0;
+        z-index: 5;
         position: absolute;
     }
 

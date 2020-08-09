@@ -1,4 +1,5 @@
 
+let onFaceApiReady = null
 const video = document.getElementById('video')
 const addListener = () => {
     video.addEventListener('play', () => {
@@ -13,8 +14,16 @@ const addListener = () => {
             try {
                 const detection = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
                                             .withFaceLandmarks()
+                                            .withFaceDescriptors()
                                             .withFaceExpressions()
-                if (onFaceDetection !== undefined && detection.length > 0) onFaceDetection(detection)
+                
+                
+                const resizeDetections = faceapi.resizeResults(detection, displaySize)
+
+                canvas.getContext('2d').clearRect(0, 0,canvas.width, canvas.height)
+                faceapi.draw.drawDetections(canvas, resizeDetections)
+
+                if (onFaceDetection !== undefined && detection.length > 0) onFaceDetection(detection, resizeDetections)
                 if (faceStatus !== undefined){
                     if (detection.length > 0){
                         faceStatus(true)
@@ -22,9 +31,6 @@ const addListener = () => {
                         faceStatus(false)
                     }
                 }
-                const resizeDetections = faceapi.resizeResults(detection, displaySize)
-                canvas.getContext('2d').clearRect(0, 0,canvas.width, canvas.height)
-                faceapi.draw.drawDetections(canvas, resizeDetections)
             } catch(err){
                 console.log('errorr ', err)
             }
@@ -45,6 +51,7 @@ const startvideo = async () => {
 
 $(async () => {
     try {
+        window.loadedImage = false
         if (window.interval) clearInterval(window.interval)
         addListener()
         Promise.all([
@@ -55,10 +62,12 @@ $(async () => {
         ]).catch(err => console.log('err', err))
 
         await faceapi.nets.ssdMobilenetv1.loadFromUri('/assets/js/modelsnew/face_expression/ssd_mobilenetv1')
-        // if (loadAllUserImage !== undefined) loadAllUserImage()
-        
         startvideo()
+        
+        if (onFaceApiReady !== null) onFaceApiReady()
+        
     } catch(err){
+        window.loadedImage = false
         console.log(err)   
     }
 })
