@@ -26,12 +26,12 @@
 <style>
     @font-face {
         font-family: 'NeoSans';
-        src: url('/assets/fonts/NeoSans/NeoSans.otf');
+        src: url('<?= base_url() ?>/assets/fonts/NeoSans/NeoSans.otf');
     }
 
     @font-face {
         font-family: 'NeoSansBold';
-        src: url('/assets/fonts/NeoSans/NeoSansBold.otf');
+        src: url('<?= base_url() ?>/assets/fonts/NeoSans/NeoSansBold.otf');
     }
     canvas{
         top: 0;

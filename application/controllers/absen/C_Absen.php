@@ -30,12 +30,16 @@ class C_Absen extends MY_Controller {
 
     public function registrasiAbsen(){
         $data['mahasiswa'] = $this->auth->getUserMahasiswa();
-        $this->render('moduls/absen/DaftarAbsen', $data);
+        $this->render('moduls/absen/DaftarAbsen', $data, [
+            'title' => 'Registrasi Absensi'
+        ]);
     }
 
     public function registrasiAbsenDetail($idauth){
         $data['datamahasiswa'] = $this->auth->getUserMahasiswaByIdAuth($idauth);
-        $this->render('moduls/absen/DaftarAbsenDetail' ,$data);
+        $this->render('moduls/absen/DaftarAbsenDetail' ,$data, [
+            'title' => 'Detail Registrasi Absen'
+        ]);
     }
 
     public function createRegisterAbsen(){

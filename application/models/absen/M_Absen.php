@@ -46,4 +46,9 @@ class M_Absen extends CI_Model {
                     ->where('b.active', 1)
                     ->get()->result_array();
     }
+
+
+    // public function createAbsensi(){
+    //     $this->db->getMs
+    // }
 }
