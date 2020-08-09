@@ -11,7 +11,6 @@
     color: #fff;
     height: 100vh;
     width: 100vw;
-    display:none;
 ">
     <div style="
         width: 100%;
