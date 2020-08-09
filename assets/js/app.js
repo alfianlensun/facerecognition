@@ -55,10 +55,10 @@ $(async () => {
         if (window.interval) clearInterval(window.interval)
         addListener()
         Promise.all([
-            faceapi.nets.tinyFaceDetector.loadFromUri('/assets/js/modelsnew/tiny_face_detector'),
-            faceapi.nets.faceLandmark68Net.loadFromUri('/assets/js/modelsnew/face_landmark_68'),
-            faceapi.nets.faceRecognitionNet.loadFromUri('/assets/js/modelsnew/face_recognition'),
-            faceapi.nets.faceExpressionNet.loadFromUri('/assets/js/modelsnew/face_expression'),
+            faceapi.nets.tinyFaceDetector.loadFromUri(base_url+'/assets/js/modelsnew/tiny_face_detector'),
+            faceapi.nets.faceLandmark68Net.loadFromUri(base_url+'/assets/js/modelsnew/face_landmark_68'),
+            faceapi.nets.faceRecognitionNet.loadFromUri(base_url+'/assets/js/modelsnew/face_recognition'),
+            faceapi.nets.faceExpressionNet.loadFromUri(base_url+'/assets/js/modelsnew/face_expression'),
         ]).catch(err => console.log('err', err))
 
         await faceapi.nets.ssdMobilenetv1.loadFromUri('/assets/js/modelsnew/face_expression/ssd_mobilenetv1')

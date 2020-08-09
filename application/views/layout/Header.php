@@ -21,6 +21,9 @@
     <script src="<?= base_url('assets/js/dataTables.bootstrap4.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/dataTables.responsive.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/responsive.bootstrap4.min.js') ?>"></script>
+    <script>
+        const base_url = '<?= base_url() ?>'
+    </script>
 </head>
 <body id="page-top">
 <style>
