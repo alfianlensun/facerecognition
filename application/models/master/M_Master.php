@@ -122,7 +122,7 @@ class M_Master extends CI_Model {
 
     public function getJadwalSekarangByIdKelas($id){
         $daynow = date('w');
-        $timenow = date('H:i');
+        $timenow = date('H:i:s');
         return $this->db->select('*')
                     ->from('trx_jadwal_kuliah as a')
                     ->join('mst_semester as b', 'a.id_mst_semester = b.id_mst_semester')

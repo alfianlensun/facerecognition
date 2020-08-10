@@ -18,6 +18,7 @@ class C_Absen extends MY_Controller {
     }
 
     public function ambilAbsen(){
+        dd(date('w'));
         $this->load->view('layout/Header', []);
         $this->load->view('moduls/absen/AmbilAbsen', ['data' => []]);
         $this->load->view('layout/Footer', []);
@@ -88,6 +89,8 @@ class C_Absen extends MY_Controller {
         } else {
             echo json_encode([
                 'success' => false,
+                'time' => date('H:i:s'),
+                'date' => date('d-m-Y'),
                 'message' => 'Belum ada kuliah saat ini'
             ]);
         }
