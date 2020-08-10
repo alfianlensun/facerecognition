@@ -31,6 +31,6 @@
 <script>
     function submit(){
         let kelas = $('#kelas').val()
-        window.location = '/absen/absensi/'+kelas
+        window.location = config+'/absen/absensi/'+kelas
     }
 </script>
