@@ -247,13 +247,13 @@
             let descriptions = []
             // let label = []
             for (const user of users){
-                const img = await faceapi.fetchImage(base_url+`/uploaddata/registerabsensi/${user.id_mst_mahasiswa}/${user.filename}`)
+                const img = await faceapi.fetchImage(base_url+`/uploaddata/registerabsensi/${user.id_mst_auth}/${user.filename}`)
                 const detection = await faceapi.detectSingleFace(img)
                                                 .withFaceLandmarks()
                                                 // .withFaceExpressions()
                                                 .withFaceDescriptor()
                 // console.log(detection.descriptor)
-                descriptions.push(new faceapi.LabeledFaceDescriptors(user.id_mst_mahasiswa.toString(), [detection.descriptor]))
+                descriptions.push(new faceapi.LabeledFaceDescriptors(user.id_mst_auth.toString(), [detection.descriptor]))
             }
             // console.log(label)
             return descriptions
