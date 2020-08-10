@@ -48,7 +48,13 @@ class M_Absen extends CI_Model {
     }
 
 
-    // public function createAbsensi(){
-    //     $this->db->getMs
-    // }
+    public function createAbsensi($datamk,$filename){
+        $this->db->insert('trx_absensi', [
+            'id_mst_mata_kuliah' => $datamk['id_mst_mata_kuliah'],
+            'id_mst_mahasiswa' => $this->input->post('id_mst_mahasiswa'),
+            'tipe_absen' => 1,
+            'jam_absen' => date('H:i:s'),
+            'filename' => $filename
+        ]);
+    }
 }

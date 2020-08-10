@@ -119,4 +119,21 @@ class M_Master extends CI_Model {
                     ->order_by('day', 'desc')
                     ->get()->result_array();
     }
+
+    public function getJadwalSekarangByIdKelas($id){
+        $daynow = date('w');
+        $timenow = date('H:i');
+        return $this->db->select('*')
+                    ->from('trx_jadwal_kuliah as a')
+                    ->join('mst_semester as b', 'a.id_mst_semester = b.id_mst_semester')
+                    ->join('mst_kelas as c', 'a.id_mst_kelas = c.id_mst_kelas')
+                    ->join('mst_dosen as d', 'a.id_mst_dosen = d.id_mst_dosen')
+                    ->join('mst_mata_kuliah as e', 'a.id_mst_mata_kuliah = e.id_mst_mata_kuliah')
+                    ->where('a.active', 1)
+                    ->where('a.day', $daynow)
+                    ->where('a.id_mst_kelas', $id)
+                    ->where("jam_mulai >=", $timenow)
+                    ->order_by('jam_mulai', 'asc')
+                    ->get()->result_array();
+    }
 }

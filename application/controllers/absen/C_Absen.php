@@ -72,7 +72,31 @@ class C_Absen extends MY_Controller {
 
 
     public function createAbsensi(){
+        $getJadwalSekarang = $this->master->getJadwalSekarangByIdKelas($this->input->post('id_mst_kelas'));
+        if (count($getJadwalSekarang) > 0){
+            $pelajaranSekarang = $getJadwalSekarang[0];
+            $filename = $this->uploadDataAbsensi();
+            $this->absen->createAbsensi($pelajaranSekarang, $filename);
+            echo json_encode([
+                'success' => true,
+                'message' => 'OK',
+                'mk' => $pelajaranSekarang,
+                'tipe_absen' => 1,
+                'time' => date('H:i:s'),
+                'date' => date('d-m-Y')
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Belum ada kuliah saat ini'
+            ]);
+        }
+        
+    }
+
+    public function uploadDataAbsensi(){
         $timestamp = time();
+
         $image = base64_decode(str_replace('data:image/jpeg;base64,', '',$this->input->post("photo")));
         $image_name = 'absensi-'.$timestamp;
         $filename = $image_name . '.' . 'jpg';
@@ -92,11 +116,7 @@ class C_Absen extends MY_Controller {
         $path = "uploaddata/absensi/".$this->input->post('id_mst_mahasiswa')."/".$filename;
         //image uploading folder path
         file_put_contents($path, $image);
-        $this->absen->createAbsensi($filename);
-        echo json_encode([
-            'success' => true,
-            'path' => $path
-        ]);
-        
+
+        return $filename;
     }
 }

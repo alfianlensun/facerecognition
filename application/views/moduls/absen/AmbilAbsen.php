@@ -24,8 +24,9 @@
         <h5 style="color: #fff;">Mengambil data mahasiswa <i class="fa fa-spin fa-spinner"></i></h5>
     </div>
 </div>
-<div class="row bg-primary"
+<div class="row"
     style="
+        background-color: #ebf4ff;
         overflow-x: hidden;
         height: 100vh;
     "
@@ -41,7 +42,7 @@
             align-items: center;
             justify-content:center;
         ">
-            <a href="<?= base_url('mainmenu') ?>" class="btn btn-info mt-4" style="align-self: flex-start;"><i class="fa fa-chevron-left"></i> Ke Main Menu</a>
+            <a href="<?= base_url('login') ?>" class="btn btn-primary mt-4" style="align-self: flex-start;"><i class="fa fa-chevron-left"></i> Ke Main Menu</a>
             <div
                 class="mt-4"
                 id="videowrapper"
@@ -65,7 +66,7 @@
             </div>
         </div>
     </div>
-    <div class="col-5" style="border-left: 1px solid #fff">
+    <div class="col-5" style="border-left: 1px solid #fff; background-color: #5a67d8">
         <div class="row pt-4 pl-4">
             <div class="col-12 " id="indikatormsg">
                 <div style="
@@ -81,7 +82,7 @@
                 </div>
             </div>
             <div class="col-12 mt-4 pt-4" id="detailuserdetection" style="display:none">
-                <h4 class="text-white" id="msg-nm">Alfian Lenun</h4>
+                <h4 class="text-white" id="msg-nm"></h4>
                 <h6 class="text-white" style="line-height: 30px;">Anda telah berhasil melakukan absen masuk</h6>
                 <div class="row">
                     <div class="col-12">
@@ -90,7 +91,7 @@
                                 Mata Kuliah
                             </div>
                             <div class="col">
-                                <h6 class="text-white " id="mst-mk"></h6>
+                                <h6 class="text-white " id="msg-mk"></h6>
                             </div>
                         </div>
                     </div>
@@ -134,39 +135,83 @@
     let scanning = false
     
     onFaceApiReady = async () => {
+
         const labeledFaceDescriptors = await loadAllUserImage();
         window.faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
         window.loadedImage = true
         $('#loader').hide()
     }
 
-    function onFaceDetection(faceData, resizeDetections){
-        if (scanning === false && window.loadedImage){
-            scanning = true
-            const faceMatcher = window.faceMatcher
-            
-            const result = resizeDetections.map(d => {
-                return faceMatcher.findBestMatch(d.descriptor)
-            })
-
-            const whoisit = result[0]._label
-            
-            if (whoisit !== 'unknown'){
-                const mahasiswa = window.allmhs.filter(mhs => {
-                    return mhs.id_mst_mahasiswa == whoisit
-                })   
-                const canvas = document.getElementById(`canvas`)
-                const context1 = canvas.getContext('2d')
+    async function onFaceDetection(faceData, resizeDetections){
+        try {
+            if (scanning === false && window.loadedImage){
+                scanning = true
+                const faceMatcher = window.faceMatcher
                 
-                context1.drawImage(video, 0,0,canvas.width, canvas.height)  
-                console.log(mahasiswa)
-            }
+                const result = resizeDetections.map(d => {
+                    return faceMatcher.findBestMatch(d.descriptor)
+                })
 
-            setTimeout(() => {
-                scanning = false
-            }, 5000);
-            
-        }  
+                const whoisit = result[0]._label
+                
+                if (whoisit !== 'unknown'){
+                    const mahasiswa = window.allmhs.filter(mhs => {
+                        return mhs.id_mst_mahasiswa == whoisit
+                    })   
+                    const canvas = document.getElementById(`canvas`)
+                    const context1 = canvas.getContext('2d')
+                    
+                    context1.drawImage(video, 0,0,canvas.width, canvas.height)                  
+                    const photo = canvas.toDataURL('image/jpeg', 1.0);
+                    const {success, mk, date,time} = await checkMKOnDb(mahasiswa[0],photo)
+                    if (success == true){
+                        $('#msg-nm').html(mahasiswa[0].nama_mahasiswa)
+                        $('#msg-mk').html(mk.nama_mata_kuliah)
+                        $('#msg-tanggal').html(date)
+                        $('#msg-jam').html(time)
+                        $('#indikatormsg').hide()
+                        $('#detailuserdetection').show()
+                        setTimeout(() => {
+                            scanning = false
+                            $('#detailuserdetection').hide()
+                            $('#indikatormsg').show()
+                        }, 10000);
+                    } else {
+                        setTimeout(() => {
+                            scanning = false
+                            $('#detailuserdetection').hide()
+                            $('#indikatormsg').show()
+                        }, 5000);
+                    }
+                }
+
+                
+            }  
+        } catch(err){
+            console.log(err)
+            scanning = false
+        }
+    }
+
+
+    async function checkMKOnDb(data,photo){
+        try {
+            return await new Promise((rs, rj) => {
+                $.ajax({
+                    url: base_url+'/absen/C_Absen/createAbsensi',
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        ...data,
+                        photo
+                    },
+                    success: resp => rs(resp),
+                    error: err => rj(err)
+                })
+            })
+        } catch(err){
+            scanning = false
+        }
     }
     
 
@@ -213,7 +258,7 @@
             // console.log(label)
             return descriptions
         } catch(err){
-            console.log(err)
+            
         }
 
     }

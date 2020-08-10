@@ -6,6 +6,8 @@ class C_Auth extends MY_Controller {
     {   
         parent::__construct();
         $this->load->model('auth/M_Auth', 'auth');
+        // dd($this->session->userdata('user_id'));
+        
     }
 
     public function index(){
@@ -13,6 +15,9 @@ class C_Auth extends MY_Controller {
     }
 
     public function login(){
+        if ($this->session->userdata('user_id') !== null){
+            redirect(base_url('mainmenu'));
+        } 
         $this->load->view('layout/header');
         $this->load->view('auth/Login');
         $this->load->view('layout/footer');
