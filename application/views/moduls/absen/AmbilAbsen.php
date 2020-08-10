@@ -156,7 +156,7 @@
                 
                 if (whoisit !== 'unknown'){
                     const mahasiswa = window.allmhs.filter(mhs => {
-                        return mhs.id_mst_mahasiswa == whoisit
+                        return mhs.id_mst_auth == whoisit
                     })   
                     const canvas = document.getElementById(`canvas`)
                     const context1 = canvas.getContext('2d')
