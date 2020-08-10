@@ -18,7 +18,6 @@ class C_Absen extends MY_Controller {
     }
 
     public function ambilAbsen(){
-        dd(date('w'));
         $this->load->view('layout/Header', []);
         $this->load->view('moduls/absen/AmbilAbsen', ['data' => []]);
         $this->load->view('layout/Footer', []);
