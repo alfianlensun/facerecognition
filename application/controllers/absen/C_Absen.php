@@ -83,11 +83,13 @@ class C_Absen extends MY_Controller {
                 'mk' => $pelajaranSekarang,
                 'tipe_absen' => 1,
                 'time' => date('H:i:s'),
-                'date' => date('d-m-Y')
+                'date' => date('d-m-Y'),
+                'day' => date('w'),
             ]);
         } else {
             echo json_encode([
                 'success' => false,
+                'day' => date('w'),
                 'time' => date('H:i:s'),
                 'date' => date('d-m-Y'),
                 'message' => 'Belum ada kuliah saat ini'
