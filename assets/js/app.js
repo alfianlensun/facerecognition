@@ -61,7 +61,7 @@ $(async () => {
             faceapi.nets.faceExpressionNet.loadFromUri(base_url+'/assets/js/modelsnew/face_expression'),
         ]).catch(err => console.log('err', err))
 
-        await faceapi.nets.ssdMobilenetv1.loadFromUri('/assets/js/modelsnew/face_expression/ssd_mobilenetv1')
+        await faceapi.nets.ssdMobilenetv1.loadFromUri(base_url+'/assets/js/modelsnew/face_expression/ssd_mobilenetv1')
         startvideo()
         
         if (onFaceApiReady !== null) onFaceApiReady()
