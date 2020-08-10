@@ -131,7 +131,7 @@
                 for (const photo of captureImage){
                     const resultUpload = await new Promise((rs, rj) => {
                         $.ajax({
-                            url: '/absen/C_Absen/createRegisterAbsen',
+                            url: base_url+'/absen/C_Absen/createRegisterAbsen',
                             method: 'post',
                             data: {
                                 id_mst_auth: $('#id_mst_auth').val(),

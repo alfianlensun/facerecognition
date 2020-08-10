@@ -234,7 +234,7 @@
         try {
             const users = await new Promise((rs, rj) => {
                 $.ajax({
-                    url: '/absen/C_Absen/getAbsenRegister',
+                    url: base_url+'/absen/C_Absen/getAbsenRegister',
                     method: 'get',
                     dataType: 'json',
                     success: resp => rs(resp),
