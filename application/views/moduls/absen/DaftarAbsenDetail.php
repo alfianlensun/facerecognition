@@ -147,7 +147,7 @@
                 }
 
                 uploading = false
-                window.location = '/absen/register'
+                window.location = base_url+'/absen/register'
             } else {
                 uploading = false
                 $(this).addClass('btn-primary').removeClass('btn-primary-load')
