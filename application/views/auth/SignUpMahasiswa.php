@@ -91,7 +91,7 @@
                 <form method="post" class="row p-2" action="<?= base_url('auth/C_Auth/updateUserMahasiswa') ?>">
                     <div class="col-12 p-4" style="border-radius: 20px; background-color: #4e73df10">
                         <div class="row">
-                            <input type="hidden" class="form-control id_mst_dosen" name="id_mst_dosen">
+                            <input type="hidden" class="form-control id_mst_mahasiswa" name="id_mst_mahasiswa">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Nama Mahasiswa</label>

@@ -118,14 +118,14 @@ class M_Auth extends CI_Model {
         if (trim($this->input->post('password')) != ''){
             $dataupdate['password'] = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
         }
-        $this->db->where('id_mst_auth', $dosen['id_mst_auth'])  
+        $this->db->where('id_mst_auth', $mahasiswa['id_mst_auth'])  
                     ->update('mst_auth', $dataupdateauth);
         
 
         $this->db->where('id_mst_mahasiswa', $this->input->post('id_mst_mahasiswa'))
-                ->update('mst_dosen', [
+                ->update('mst_mahasiswa', [
                     'nama_mahasiswa' => $this->input->post('nama_mahasiswa'),
-                    'nip' => $this->input->post('nip')
+                    'nim' => $this->input->post('nim')
                 ]);
         return $this->db->affected_rows();
     }
