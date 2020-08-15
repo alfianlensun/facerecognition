@@ -67,3 +67,5 @@ $route['absen/register'] = 'absen/C_Absen/registrasiAbsen';
 $route['absen/register/detail/(:any)'] = 'absen/C_Absen/registrasiAbsenDetail/$1';
 $route['absen/absensi/(:any)'] = 'absen/C_Absen/ambilAbsen/$1';
 $route['absen'] = 'absen/C_Absen/pilihRuanganAbsen';
+$route['absen/laporanabsen'] = 'absen/C_Absen/laporanAbsen';
+$route['absen/laporanabsen/detail/(:any)'] = 'absen/C_Absen/laporanAbsenDetail/$1';

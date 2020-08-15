@@ -50,11 +50,32 @@ class M_Absen extends CI_Model {
 
     public function createAbsensi($datamk,$filename){
         $this->db->insert('trx_absensi', [
+            'id_mst_kelas' => $this->input->post('id_mst_kelas'),
             'id_mst_mata_kuliah' => $datamk['id_mst_mata_kuliah'],
             'id_mst_mahasiswa' => $this->input->post('id_mst_mahasiswa'),
             'tipe_absen' => 1,
-            'jam_absen' => date('H:i:s'),
+            'jam_absen' => date('Y-m-d H:i:s'),
             'filename' => $filename
         ]);
+    }
+
+    public function getLaporanAbsensi($id_mst_kelas){
+        $datakelas = $this->db->select('nama_kelas')
+                                ->from('mst_kelas')
+                                ->where('active', 1)
+                                ->where('id_mst_kelas', $id_mst_kelas)
+                                ->get()->row_array();
+        $this->db->select('*')
+                    ->from('trx_absensi as a')
+                    ->join('mst_kelas as b', 'a.id_mst_kelas = b.id_mst_kelas')
+                    ->join('mst_mata_kuliah as c', 'a.id_mst_mata_kuliah = c.id_mst_mata_kuliah')
+                    ->join('mst_mahasiswa as d', 'a.id_mst_mahasiswa = d.id_mst_mahasiswa')
+                    ->where('a.id_mst_kelas', $id_mst_kelas);
+        if ($this->input->post('date')){
+            $this->db->where('date(a.jam_absen)', $this->input->post('date'));
+        }
+        
+        return $this->db->get()->result_array();
+                            
     }
 }

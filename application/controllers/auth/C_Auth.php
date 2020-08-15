@@ -6,6 +6,7 @@ class C_Auth extends MY_Controller {
     {   
         parent::__construct();
         $this->load->model('auth/M_Auth', 'auth');
+        $this->load->model('master/M_Master', 'master');
         // dd($this->session->userdata('user_id'));
         
     }
@@ -52,6 +53,7 @@ class C_Auth extends MY_Controller {
 
     public function userManagementMahasiswa(){
         $data['mahasiswa'] = $this->auth->getUserMahasiswa();
+        $data['kelas'] = $this->master->getMasterKelas();
         $this->render('auth/SignUpMahasiswa', $data);
     }
 

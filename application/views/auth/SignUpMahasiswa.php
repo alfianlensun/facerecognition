@@ -20,6 +20,18 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
+                                    <label for="exampleFormControlInput2">Kelas</label>
+                                    <select name="id_mst_kelas" id="" class="custom-select" required>
+                                        <?php foreach ($kelas as $k): $i=0?>
+                                            <option value="<?= $k['id_mst_kelas'] ?>" <?= $i==0 ? 'selected': '' ?>><?= $k['nama_kelas'] ?></option>
+                                        <?php 
+                                            $i++;
+                                            endforeach ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
                                     <label for="exampleFormControlInput3">Password</label>
                                     <input type="password" class="form-control" name="password" id="exampleFormControlInput3" placeholder="Masukan password" required>
                                 </div>
@@ -42,16 +54,17 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>Nama Mahasiswa</th>
+                                <th>Kelas</th>
                                 <th>NIM</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
-                                
                                 foreach ($mahasiswa as $k) : ?>
                                 <tr>
                                     <td><?= $k['nama_mahasiswa'] ?></td>
+                                    <td><?= $k['nama_kelas'] ?></td>
                                     <td><?= $k['nim'] ?></td>
                                     <td>
                                         <div class="row">
@@ -100,8 +113,20 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="exampleFormControlInput2">NIP</label>
+                                    <label for="exampleFormControlInput2">NIM</label>
                                     <input type="text" class="form-control nim" name="nim" id="exampleFormControlInput2" placeholder="Masukan NIM" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput2">Kelas</label>
+                                    <select name="id_mst_kelas" id="" class="custom-select id_mst_kelas" required>
+                                        <?php foreach ($kelas as $k): $i=0?>
+                                            <option value="<?= $k['id_mst_kelas'] ?>" <?= $i==0 ? 'selected': '' ?>><?= $k['nama_kelas'] ?></option>
+                                        <?php 
+                                            $i++;
+                                            endforeach ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-6">

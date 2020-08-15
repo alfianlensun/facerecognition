@@ -27,6 +27,11 @@
     <i class="fas fa-fw fa-fingerprint"></i>
     <span>Absensi</span></a>
 </li>
+<li class="nav-item">
+    <a class="nav-link" href="<?= base_url('absen/laporanabsen') ?>">
+    <i class="fas fa-fw fa-chart-area"></i>
+    <span>Data Absensi</span></a>
+</li>
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -41,6 +46,7 @@
     </div>
     </div>
 </li>
+
 <li class="nav-item">
     <a class="nav-link" href="<?= base_url('jadwal/setting') ?>">
     <i class="fas fa-fw fa-chart-area"></i>

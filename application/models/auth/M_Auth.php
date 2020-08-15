@@ -76,8 +76,11 @@ class M_Auth extends CI_Model {
     }
 
     public function getUserMahasiswa(){
-        return $this->db->where('active', 1)
-                        ->get('mst_mahasiswa')
+        return $this->db->select('*')
+                        ->from('mst_mahasiswa as a')
+                        ->join('mst_kelas as b', 'a.id_mst_kelas = b.id_mst_kelas')
+                        ->where('a.active', 1)
+                        ->get()
                         ->result_array();
     }
 
@@ -113,8 +116,9 @@ class M_Auth extends CI_Model {
                                 ->row_array(0);
         $dataupdateauth = [
             'username' => $this->input->post('nip'),
-            'user_type' => 2,
+            'user_type' => 2
         ];
+        
         if (trim($this->input->post('password')) != ''){
             $dataupdate['password'] = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
         }
@@ -125,7 +129,8 @@ class M_Auth extends CI_Model {
         $this->db->where('id_mst_mahasiswa', $this->input->post('id_mst_mahasiswa'))
                 ->update('mst_mahasiswa', [
                     'nama_mahasiswa' => $this->input->post('nama_mahasiswa'),
-                    'nim' => $this->input->post('nim')
+                    'nim' => $this->input->post('nim'),
+                    'id_mst_kelas' => $this->input->post('id_mst_kelas')
                 ]);
         return $this->db->affected_rows();
     }

@@ -17,14 +17,16 @@ class C_Absen extends MY_Controller {
         $this->load->view('layout/Footer', []);
     }
 
-    public function ambilAbsen(){
+    public function ambilAbsen($idkelas){
         $this->load->view('layout/Header', []);
-        $this->load->view('moduls/absen/AmbilAbsen', ['data' => []]);
+        $this->load->view('moduls/absen/AmbilAbsen', [
+            'id_mst_kelas' => $idkelas
+        ]);
         $this->load->view('layout/Footer', []);
     }
 
-    public function getAbsenRegister(){
-        $datamahasiswa = $this->absen->getAbsenRegister();
+    public function getAbsenRegister($id_mst_kelas){
+        $datamahasiswa = $this->absen->getAbsenRegister($id_mst_kelas);
         echo json_encode($datamahasiswa);
     }
 
@@ -122,5 +124,37 @@ class C_Absen extends MY_Controller {
         file_put_contents($path, $image);
 
         return $filename;
+    }
+
+    public function laporanAbsen(){
+        $data['kelas'] = $this->master->getMasterKelas();
+        $this->render('moduls/laporan_absen/LaporanAbsen', $data, [
+            'title' => 'Data absensi'
+        ]);   
+    }
+
+    public function laporanAbsenDetail($idkelas){
+        
+        $absensi = $this->absen->getLaporanAbsensi($idkelas);
+        $temp = [];
+        foreach ($absensi as $a){
+            if (!isset($temp[$a['id_mst_mahasiswa'].'-'.$a['id_mst_mata_kuliah']])){
+                $temp[$a['id_mst_mahasiswa'].'-'.$a['id_mst_mata_kuliah']] = $a;
+            } else {
+                if ($temp[$a['id_mst_mahasiswa'].'-'.$a['id_mst_mata_kuliah']]['jam_absen'] > $a['jam_absen']){
+                    $temp[$a['id_mst_mahasiswa'].'-'.$a['id_mst_mata_kuliah']] = $a;
+                } 
+            }
+
+        }
+        $data['absenDetail'] = [];
+        foreach ($temp as $tmp){
+            $data['absenDetail'][] = $tmp;
+        }
+        
+
+        $this->render('moduls/laporan_absen/LaporanAbsenDetail', $data, [
+            'title' => 'Data absensi'
+        ]);   
     }
 }

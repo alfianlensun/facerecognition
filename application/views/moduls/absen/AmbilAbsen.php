@@ -137,6 +137,7 @@
     onFaceApiReady = async () => {
 
         const labeledFaceDescriptors = await loadAllUserImage();
+        console.log(labeledFaceDescriptors)
         window.faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
         window.loadedImage = true
         $('#loader').hide()
@@ -172,9 +173,9 @@
                         $('#indikatormsg').hide()
                         $('#detailuserdetection').show()
                         setTimeout(() => {
-                            scanning = false
                             $('#detailuserdetection').hide()
                             $('#indikatormsg').show()
+                            scanning = false
                         }, 10000);
                     } else {
                         setTimeout(() => {
@@ -183,6 +184,12 @@
                             $('#indikatormsg').show()
                         }, 5000);
                     }
+                } else {
+                    setTimeout(() => {
+                        scanning = false
+                        $('#detailuserdetection').hide()
+                        $('#indikatormsg').show()
+                    }, 5000);
                 }
 
                 
@@ -234,7 +241,7 @@
         try {
             const users = await new Promise((rs, rj) => {
                 $.ajax({
-                    url: base_url+'/absen/C_Absen/getAbsenRegister',
+                    url: base_url+'/absen/C_Absen/getAbsenRegister/'+'<?= $id_mst_kelas ?>',
                     method: 'get',
                     dataType: 'json',
                     success: resp => rs(resp),
