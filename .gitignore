@@ -1,3 +1,5 @@
 uploaddata/
 uploaddata
 
+application/config/config.php
+application/config/database.php
