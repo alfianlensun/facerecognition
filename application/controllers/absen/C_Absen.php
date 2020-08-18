@@ -134,7 +134,6 @@ class C_Absen extends MY_Controller {
     }
 
     public function laporanAbsenDetail($idkelas){
-        
         $absensi = $this->absen->getLaporanAbsensi($idkelas);
         $temp = [];
         foreach ($absensi as $a){
