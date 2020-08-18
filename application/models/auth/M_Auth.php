@@ -79,6 +79,7 @@ class M_Auth extends CI_Model {
         return $this->db->select('*')
                         ->from('mst_mahasiswa as a')
                         ->join('mst_kelas as b', 'a.id_mst_kelas = b.id_mst_kelas')
+                        ->join('mst_semester as c', 'a.id_mst_semester = c.id_mst_semester')
                         ->where('a.active', 1)
                         ->get()
                         ->result_array();

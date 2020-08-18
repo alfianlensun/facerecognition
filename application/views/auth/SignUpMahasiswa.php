@@ -67,6 +67,7 @@
                             <tr>
                                 <th>Nama Mahasiswa</th>
                                 <th>Kelas</th>
+                                <th>Semester</th>
                                 <th>NIM</th>
                                 <th>Opsi</th>
                             </tr>
@@ -77,6 +78,7 @@
                                 <tr>
                                     <td><?= $k['nama_mahasiswa'] ?></td>
                                     <td><?= $k['nama_kelas'] ?></td>
+                                    <td><?= $k['nama_semester'] ?></td>
                                     <td><?= $k['nim'] ?></td>
                                     <td>
                                         <div class="row">
