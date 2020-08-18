@@ -19,7 +19,7 @@ class C_Auth extends MY_Controller {
         if ($this->session->userdata('user_id') !== null){
             redirect(base_url('mainmenu'));
         } 
-        $this->load->view('layout/header');
+        $this->load->view('layout/Header');
         $this->load->view('auth/Login');
         $this->load->view('layout/footer');
     }
