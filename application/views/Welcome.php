@@ -11,7 +11,7 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-5">
-                                <?php $this->load->view('layout/components/card', [
+                                <?php $this->load->view('layout/components/Card', [
                                     'title' => 'Absensi',
                                     'detail' => 'Absensi Mahasiswa',
                                     'route' => 'absen',
@@ -19,7 +19,7 @@
                                 ]) ?>
                             </div>
                             <div class="col-5">
-                                <?php $this->load->view('layout/components/card', [
+                                <?php $this->load->view('layout/components/Card', [
                                     'title' => 'Registrasi Wajah',
                                     'detail' => 'Registrasi wajah untuk proses absensi',
                                     'route' => 'absen/register',
