@@ -21,7 +21,7 @@ class C_Auth extends MY_Controller {
         } 
         $this->load->view('layout/Header');
         $this->load->view('auth/Login');
-        $this->load->view('layout/footer');
+        $this->load->view('layout/Footer');
     }
 
     public function validateLogin(){
