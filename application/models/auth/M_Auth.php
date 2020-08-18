@@ -102,6 +102,8 @@ class M_Auth extends CI_Model {
         $this->db->insert('mst_mahasiswa', [
             'id_mst_auth' => $id_mst_auth,
             'nama_mahasiswa' => $this->input->post('nama_mahasiswa'),
+            'id_mst_kelas' => $this->input->post('id_mst_kelas'),
+            'id_mst_semester' => $this->input->post('id_mst_semester'),
             'nim' => $this->input->post('nim'),
             
         ]);
@@ -115,7 +117,7 @@ class M_Auth extends CI_Model {
                                 ->get()
                                 ->row_array(0);
         $dataupdateauth = [
-            'username' => $this->input->post('nip'),
+            'username' => $this->input->post('nim'),
             'user_type' => 2
         ];
         
@@ -130,7 +132,8 @@ class M_Auth extends CI_Model {
                 ->update('mst_mahasiswa', [
                     'nama_mahasiswa' => $this->input->post('nama_mahasiswa'),
                     'nim' => $this->input->post('nim'),
-                    'id_mst_kelas' => $this->input->post('id_mst_kelas')
+                    'id_mst_kelas' => $this->input->post('id_mst_kelas'),
+                    'id_mst_semester' => $this->input->post('id_mst_semester')
                 ]);
         return $this->db->affected_rows();
     }

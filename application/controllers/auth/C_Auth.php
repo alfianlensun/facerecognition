@@ -54,6 +54,7 @@ class C_Auth extends MY_Controller {
     public function userManagementMahasiswa(){
         $data['mahasiswa'] = $this->auth->getUserMahasiswa();
         $data['kelas'] = $this->master->getMasterKelas();
+        $data['semester'] = $this->master->getMasterSemester();
         $this->render('auth/SignUpMahasiswa', $data);
     }
 

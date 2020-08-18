@@ -32,6 +32,18 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
+                                    <label for="exampleFormControlInput2">Semester</label>
+                                    <select name="id_mst_semester" id="" class="custom-select" required>
+                                        <?php foreach ($semester as $k): $i=0?>
+                                            <option value="<?= $k['id_mst_semester'] ?>" <?= $i==0 ? 'selected': '' ?>><?= $k['nama_semester'] ?></option>
+                                        <?php 
+                                            $i++;
+                                            endforeach ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
                                     <label for="exampleFormControlInput3">Password</label>
                                     <input type="password" class="form-control" name="password" id="exampleFormControlInput3" placeholder="Masukan password" required>
                                 </div>
@@ -123,6 +135,18 @@
                                     <select name="id_mst_kelas" id="" class="custom-select id_mst_kelas" required>
                                         <?php foreach ($kelas as $k): $i=0?>
                                             <option value="<?= $k['id_mst_kelas'] ?>" <?= $i==0 ? 'selected': '' ?>><?= $k['nama_kelas'] ?></option>
+                                        <?php 
+                                            $i++;
+                                            endforeach ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput2">Semester</label>
+                                    <select name="id_mst_semester" id="" class="custom-select id_mst_semester" required>
+                                        <?php foreach ($semester as $k): $i=0?>
+                                            <option value="<?= $k['id_mst_semester'] ?>" <?= $i==0 ? 'selected': '' ?>><?= $k['nama_semester'] ?></option>
                                         <?php 
                                             $i++;
                                             endforeach ?>
