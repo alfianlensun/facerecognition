@@ -249,6 +249,12 @@
                 })
             })
 
+            if (user.length === 0){
+                alert('Tidak ada mahasiswa terdaftar absensi di kelas ini')
+                window.history.back()
+                return false
+            }
+
             window.allmhs = users
 
             let descriptions = []
