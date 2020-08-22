@@ -47,7 +47,7 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Pengaturan Pengguna</h6>
-        <a class="collapse-item" href="<?= base_url('user-management/mahasiswa') ?>">Mahasiswa</a>
+        <a class="collapse-item" href="<?= base_url('user-management/mahasiswa/pilih-semester') ?>">Mahasiswa</a>
         <a class="collapse-item" href="<?= base_url('user-management/dosen') ?>">Dosen</a>
     </div>
     </div>

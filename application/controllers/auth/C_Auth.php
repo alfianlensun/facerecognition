@@ -71,13 +71,33 @@ class C_Auth extends MY_Controller {
         redirect(base_url('login'));
     }
 
-    public function userManagementMahasiswa(){
+    public function userManagementMahasiswa($id_mst_kelas, $id_mst_semester){
         $this->validate();
-        $data['mahasiswa'] = $this->auth->getUserMahasiswa();
-        $data['kelas'] = $this->master->getMasterKelas();
+
+        $data['mahasiswa'] = $this->auth->getUserMahasiswaByIdKelasAndSemester($id_mst_kelas, $id_mst_semester);
+        $data['id_mst_kelas'] = $id_mst_kelas;
+        $data['id_mst_semester'] = $id_mst_semester;
         $data['semester'] = $this->master->getMasterSemester();
         $this->render('auth/SignUpMahasiswa', $data);
     }
+
+    public function userManagementMahasiswaPilihKelas($id_mst_semester){
+        $this->validate();
+        $data['kelas'] = $this->master->getMasterKelas();
+        $data['id_mst_semester'] = $id_mst_semester;
+        $this->render('auth/SignUpMahasiswaPilihKelas', $data, [
+            'title' => 'Tambah Mahasiswa'
+        ]);
+    }
+
+    public function userManagementMahasiswaPilihSemester(){
+        $this->validate();
+        $data['semester'] = $this->master->getMasterSemester();
+        $this->render('auth/SignUpMahasiswaPilihSemester', $data, [
+            'title' => 'Tambah Mahasiswa'
+        ]);
+    }
+    
 
     public function userManagementDosen(){
         $this->validate();
@@ -146,7 +166,7 @@ class C_Auth extends MY_Controller {
 
     public function updateUserMahasiswa(){
         $update = $this->auth->updateUserMahasiswa();
-        redirect(base_url('user-management/mahasiswa'));
+        redirect(base_url('user-management/mahasiswa/tambah/'.$this->input->post('id_mst_kelas').'/'.$this->input->post('id_mst_semester')));
     }
     
     public function deleteUserMahasiswa(){

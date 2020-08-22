@@ -18,30 +18,9 @@
                                     <input type="text" class="form-control" name="nim" id="exampleFormControlInput2" placeholder="Masukan NIM" required>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput2">Kelas</label>
-                                    <select name="id_mst_kelas" id="" class="custom-select" required>
-                                        <?php foreach ($kelas as $k): $i=0?>
-                                            <option value="<?= $k['id_mst_kelas'] ?>" <?= $i==0 ? 'selected': '' ?>><?= $k['nama_kelas'] ?></option>
-                                        <?php 
-                                            $i++;
-                                            endforeach ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput2">Semester</label>
-                                    <select name="id_mst_semester" id="" class="custom-select" required>
-                                        <?php foreach ($semester as $k): $i=0?>
-                                            <option value="<?= $k['id_mst_semester'] ?>" <?= $i==0 ? 'selected': '' ?>><?= $k['nama_semester'] ?></option>
-                                        <?php 
-                                            $i++;
-                                            endforeach ?>
-                                    </select>
-                                </div>
-                            </div>
+                            <input type="hidden" name="id_mst_kelas" value="<?= $id_mst_kelas ?>">
+                            <input type="hidden" name="id_mst_semester" value="<?= $id_mst_semester ?>">
+                            
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput3">Password</label>
@@ -131,30 +110,8 @@
                                     <input type="text" class="form-control nim" name="nim" id="exampleFormControlInput2" placeholder="Masukan NIM" required>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput2">Kelas</label>
-                                    <select name="id_mst_kelas" id="" class="custom-select id_mst_kelas" required>
-                                        <?php foreach ($kelas as $k): $i=0?>
-                                            <option value="<?= $k['id_mst_kelas'] ?>" <?= $i==0 ? 'selected': '' ?>><?= $k['nama_kelas'] ?></option>
-                                        <?php 
-                                            $i++;
-                                            endforeach ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput2">Semester</label>
-                                    <select name="id_mst_semester" id="" class="custom-select id_mst_semester" required>
-                                        <?php foreach ($semester as $k): $i=0?>
-                                            <option value="<?= $k['id_mst_semester'] ?>" <?= $i==0 ? 'selected': '' ?>><?= $k['nama_semester'] ?></option>
-                                        <?php 
-                                            $i++;
-                                            endforeach ?>
-                                    </select>
-                                </div>
-                            </div>
+                            <input type="hidden" value="<?= $id_mst_kelas ?>" name="id_mst_kelas">
+                            <input type="hidden" value="<?= $id_mst_semester ?>" name="id_mst_semester" >
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput3">Password</label>

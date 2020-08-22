@@ -85,6 +85,18 @@ class M_Auth extends CI_Model {
                         ->result_array();
     }
 
+    public function getUserMahasiswaByIdKelasAndSemester($id_mst_kelas, $id_mst_semester){
+        return $this->db->select('*')
+                        ->from('mst_mahasiswa as a')
+                        ->join('mst_kelas as b', 'a.id_mst_kelas = b.id_mst_kelas')
+                        ->join('mst_semester as c', 'a.id_mst_semester = c.id_mst_semester', 'left')
+                        ->where('a.active', 1)
+                        ->where("a.id_mst_kelas", $id_mst_kelas)
+                        ->where_in('a.id_mst_semester', [$id_mst_semester, 0])
+                        ->get()
+                        ->result_array();
+    }
+
     public function getUserMahasiswaByIdAuth($id){
         return $this->db->where('active', 1)
                         ->where('id_mst_auth', $id)
@@ -115,8 +127,8 @@ class M_Auth extends CI_Model {
             $this->db->insert('mst_mahasiswa', [
                 'id_mst_auth' => $id_mst_auth,
                 'nama_mahasiswa' => $this->input->post('nama_mahasiswa'),
-                'id_mst_kelas' => $this->input->post('id_mst_kelas'),
-                'id_mst_semester' => $this->input->post('id_mst_semester'),
+                'id_mst_kelas' => $this->input->post('id_mst_kelas') ? $this->input->post('id_mst_kelas') : 0,
+                'id_mst_semester' => $this->input->post('id_mst_semester')  ? $this->input->post('id_mst_semester') : 0,
                 'nim' => $this->input->post('nim'),
                 
             ]);
