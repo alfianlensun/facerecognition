@@ -23,6 +23,11 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Selamat datang di aplikasi absensi</h1>
                         </div>
+                        <?php if ($this->session->flashdata('signup')): ?>
+                            <div class="alert alert-success" role="alert">
+                                <?= $this->session->flashdata('signup') ?>
+                            </div>
+                        <?php endif ?>
                         <form class="user" method="post" action="<?= base_url('validate-login') ?>">
                             <div class="form-group">
                                 <input type="text" name="username" class="form-control form-control-user" id="username" aria-describedby="emailHelp" placeholder="Masukan username...">
@@ -32,6 +37,7 @@
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-block btn-user">Masuk</button>
+                                <a href="<?= base_url('sign-up') ?>" class="btn btn-primary btn-block btn-user">Mendaftar</a>
                             </div>
                         </form>
                         </div>

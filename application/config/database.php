@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '127.0.0.1',
+	'hostname' => 'db',
 	'username' => 'root',
-	'password' => 'siksaskali',
+	'password' => 'root',
 	'database' => 'absensi',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

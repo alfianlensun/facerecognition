@@ -7,7 +7,6 @@ class C_Auth extends MY_Controller {
         parent::__construct();
         $this->load->model('auth/M_Auth', 'auth');
         $this->load->model('master/M_Master', 'master');
-        // dd($this->session->userdata('user_id'));
         
     }
 
@@ -24,14 +23,35 @@ class C_Auth extends MY_Controller {
         $this->load->view('layout/Footer');
     }
 
+    public function signUpMhs(){
+        if ($this->session->userdata('user_id') !== null){
+            redirect(base_url('mainmenu'));
+        } 
+        $data['kelas'] = $this->master->getMasterKelas();
+        $this->load->view('layout/Header');
+        $this->load->view('auth/SignUpMahasiswaSA', $data);
+        $this->load->view('layout/Footer');
+    }
+
     public function validateLogin(){
         $user = $this->auth->getUserAuthByUsername($this->input->post('username'));
         if ($user !== null){
             if (password_verify($this->input->post('password'), $user['password'])){
                 if ($user['user_type'] == 1){
                     $this->session->set_userdata([
+                        'user_type' => $user['user_type'],
                         'user_id' => $user['id_mst_auth'],
-                        'user' => 'admin'
+                        'user' => 'admin',
+                        'data' => null
+                    ]);
+                } else
+                if ($user['user_type'] == 3) {
+                    $mhs = $this->auth->getUserMahasiswaByIdAuth($user['id_mst_auth']);
+                    $this->session->set_userdata([
+                        'user_type' => $user['user_type'],
+                        'user_id' => $user['id_mst_auth'],
+                        'user' => $mhs['nama_mahasiswa'],
+                        'data' => $mhs
                     ]);
                 }
 
@@ -52,6 +72,7 @@ class C_Auth extends MY_Controller {
     }
 
     public function userManagementMahasiswa(){
+        $this->validate();
         $data['mahasiswa'] = $this->auth->getUserMahasiswa();
         $data['kelas'] = $this->master->getMasterKelas();
         $data['semester'] = $this->master->getMasterSemester();
@@ -59,6 +80,7 @@ class C_Auth extends MY_Controller {
     }
 
     public function userManagementDosen(){
+        $this->validate();
         $data['dosen'] = $this->auth->getUserDosen();
         $this->render('auth/SignUpDosen', $data);
     }
@@ -83,6 +105,43 @@ class C_Auth extends MY_Controller {
     public function createUserMahasiswa(){
         $mahasiswa = $this->auth->createUserMahasiswa();
         redirect(base_url('user-management/mahasiswa'));
+    }
+
+    public function createUserMahasiswaSA(){
+        $valid =true;
+        foreach ($this->input->post() as $key => $postdata){
+            if (strlen($postdata) === 0){
+                $valid = false;
+                $this->session->set_flashdata('msg', json_encode([
+                    'status' => false,
+                    'message' => 'Lengkapi form terlebih dahulu'
+                ]));
+                break;
+            }
+        }
+        
+        if ($this->input->post('password') !== $this->input->post('confirmpassword')){
+            $this->session->set_flashdata('msg', json_encode([
+                'status' => false,
+                'message' => 'Password tidak cocok'
+            ]));
+            $valid =false;
+        }
+
+    
+        if ($valid){
+            $mahasiswa = $this->auth->createUserMahasiswa();
+
+            if ($mahasiswa['status']){
+                $this->session->set_flashdata('signup', 'Berhasil mendaftar silahkan login untuk melanjutkan');
+                redirect(base_url('login'));
+            }  else {
+                $this->session->set_flashdata('msg', json_encode($mahasiswa));
+                redirect(base_url('sign-up'));
+            }
+        } else {
+            redirect(base_url('sign-up'));   
+        }
     }
 
     public function updateUserMahasiswa(){

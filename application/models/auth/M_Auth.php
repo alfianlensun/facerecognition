@@ -79,7 +79,7 @@ class M_Auth extends CI_Model {
         return $this->db->select('*')
                         ->from('mst_mahasiswa as a')
                         ->join('mst_kelas as b', 'a.id_mst_kelas = b.id_mst_kelas')
-                        ->join('mst_semester as c', 'a.id_mst_semester = c.id_mst_semester')
+                        ->join('mst_semester as c', 'a.id_mst_semester = c.id_mst_semester', 'left')
                         ->where('a.active', 1)
                         ->get()
                         ->result_array();
@@ -93,21 +93,38 @@ class M_Auth extends CI_Model {
     }
 
     public function createUserMahasiswa(){
-        $password = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
-        $this->db->insert('mst_auth', [
-            'username' => $this->input->post('nim'),
-            'password' => $password,
-            'user_type' => 3,
-        ]);
-        $id_mst_auth = $this->db->insert_id();
-        $this->db->insert('mst_mahasiswa', [
-            'id_mst_auth' => $id_mst_auth,
-            'nama_mahasiswa' => $this->input->post('nama_mahasiswa'),
-            'id_mst_kelas' => $this->input->post('id_mst_kelas'),
-            'id_mst_semester' => $this->input->post('id_mst_semester'),
-            'nim' => $this->input->post('nim'),
-            
-        ]);
+        $checkNIM = $this->db->select('*')
+                                ->from('mst_auth')
+                                ->where('username', $this->input->post('nim'))
+                                ->where('active', 1)
+                                ->count_all_results();
+        
+        if ($checkNIM > 0){
+            return [
+                'status' => false,
+                'message' => 'NIM Sudah Pernah terdaftar'
+            ];
+        } else {
+            $password = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
+            $this->db->insert('mst_auth', [
+                'username' => $this->input->post('nim'),
+                'password' => $password,
+                'user_type' => 3,
+            ]);
+            $id_mst_auth = $this->db->insert_id();
+            $this->db->insert('mst_mahasiswa', [
+                'id_mst_auth' => $id_mst_auth,
+                'nama_mahasiswa' => $this->input->post('nama_mahasiswa'),
+                'id_mst_kelas' => $this->input->post('id_mst_kelas'),
+                'id_mst_semester' => $this->input->post('id_mst_semester'),
+                'nim' => $this->input->post('nim'),
+                
+            ]);
+            return [
+                'status' => true,
+                'message' => 'OK'
+            ];
+        }
     }
 
     public function updateUserMahasiswa(){

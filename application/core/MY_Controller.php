@@ -9,6 +9,12 @@ class MY_Controller extends CI_Controller{
         // }
     }
 
+    public function validate(){
+        if ($this->session->userdata('user_id') === null){
+            redirect(base_url('login'));
+        } 
+    }
+
     public function render($body = null, $data = [], $option = []){
         if ($body === null) dd('invalid body parameter');
         $this->load->view('layout/Header', $data);

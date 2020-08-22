@@ -28,6 +28,12 @@
     <span>Absensi</span></a>
 </li>
 <li class="nav-item">
+    <a class="nav-link" href="<?= base_url('absen/register') ?>">
+    <i class="fas fa-fw fa-fingerprint"></i>
+    <span>Registrasi Wajah</span></a>
+</li>
+<?php if ($this->session->userdata('user_type') == 1): ?>
+    <li class="nav-item">
     <a class="nav-link" href="<?= base_url('absen/laporanabsen') ?>">
     <i class="fas fa-fw fa-chart-area"></i>
     <span>Data Absensi</span></a>
@@ -66,5 +72,7 @@
     </div>
     </div>
 </li>
+
+<?php endif ?>
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">
