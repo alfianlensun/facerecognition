@@ -98,9 +98,12 @@ class M_Auth extends CI_Model {
     }
 
     public function getUserMahasiswaByIdAuth($id){
-        return $this->db->where('active', 1)
-                        ->where('id_mst_auth', $id)
-                        ->get('mst_mahasiswa')
+        return $this->db->select('*')
+                        ->from('mst_mahasiswa as a')
+                        ->join('mst_kelas as b', 'a.id_mst_kelas = b.id_mst_kelas' )
+                        ->where('a.active', 1)
+                        ->where('a.id_mst_auth', $id)
+                        ->get()
                         ->row_array();
     }
 

@@ -46,7 +46,7 @@
                                 Kelas Sekarang
                             </div>
                             <div class="col">
-                                : <?= 'Belum di setting' ?>
+                                : <?= $datamahasiswa['nama_kelas'] ?>
                             </div>
                         </div>
                     </div>
