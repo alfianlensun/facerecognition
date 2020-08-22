@@ -131,7 +131,7 @@ class M_Auth extends CI_Model {
                 'id_mst_auth' => $id_mst_auth,
                 'nama_mahasiswa' => $this->input->post('nama_mahasiswa'),
                 'id_mst_kelas' => $this->input->post('id_mst_kelas') ? $this->input->post('id_mst_kelas') : 0,
-                'id_mst_semester' => $this->input->post('id_mst_semester')  ? $this->input->post('id_mst_semester') : 0,
+                'id_mst_semester' => $this->input->post('id_mst_semester')  ? $this->input->post('id_mst_semester') : 1,
                 'nim' => $this->input->post('nim'),
                 
             ]);
