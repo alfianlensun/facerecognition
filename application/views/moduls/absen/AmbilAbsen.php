@@ -261,7 +261,7 @@
             let descriptions = []
             // let label = []
             for (const user of users){
-                console.log('load image ==', user.nama_mahasiswa)
+                console.log('load image ==', user)
                 const img = await faceapi.fetchImage(base_url+`/uploaddata/registerabsensi/${user.id_mst_auth}/${user.filename}`)
                 const detection = await faceapi.detectSingleFace(img)
                                                 .withFaceLandmarks()
