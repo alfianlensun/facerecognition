@@ -239,6 +239,7 @@
 
     async function loadAllUserImage(){
         try {
+            console.log('load user image')
             const users = await new Promise((rs, rj) => {
                 $.ajax({
                     url: base_url+'/absen/C_Absen/getAbsenRegister/'+'<?= $id_mst_kelas ?>',
@@ -260,6 +261,7 @@
             let descriptions = []
             // let label = []
             for (const user of users){
+                console.log('load image ==', user.nama_mahasiswa)
                 const img = await faceapi.fetchImage(base_url+`/uploaddata/registerabsensi/${user.id_mst_auth}/${user.filename}`)
                 const detection = await faceapi.detectSingleFace(img)
                                                 .withFaceLandmarks()
@@ -273,7 +275,7 @@
             // console.log(label)
             return descriptions
         } catch(err){
-            
+            console.log('error while load image ', err)
         }
 
     }
