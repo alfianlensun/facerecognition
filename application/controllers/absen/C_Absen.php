@@ -165,10 +165,35 @@ class C_Absen extends MY_Controller {
         foreach ($temp as $tmp){
             $data['absenDetail'][] = $tmp;
         }
-        
+
+        $data['mk'] = $this->master->getMK();
 
         $this->render('moduls/laporan_absen/LaporanAbsenDetail', $data, [
             'title' => 'Data absensi'
         ]);   
+    }
+
+    public function laporanAbsenDetailXls($idkelas){
+        $this->validate();
+        $absensi = $this->absen->getLaporanAbsensi($idkelas);
+        $temp = [];
+        foreach ($absensi as $a){
+            if (!isset($temp[$a['id_mst_mahasiswa'].'-'.$a['id_mst_mata_kuliah']])){
+                $temp[$a['id_mst_mahasiswa'].'-'.$a['id_mst_mata_kuliah']] = $a;
+            } else {
+                if ($temp[$a['id_mst_mahasiswa'].'-'.$a['id_mst_mata_kuliah']]['jam_absen'] > $a['jam_absen']){
+                    $temp[$a['id_mst_mahasiswa'].'-'.$a['id_mst_mata_kuliah']] = $a;
+                } 
+            }
+
+        }
+        $data['absenDetail'] = [];
+        foreach ($temp as $tmp){
+            $data['absenDetail'][] = $tmp;
+        }
+        
+        $data['mk'] = $this->master->getMK();
+
+        $this->load->view('moduls/laporan_absen/LaporanAbsenDetailXls', $data);
     }
 }

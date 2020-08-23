@@ -74,3 +74,4 @@ $route['absen/absensi/(:any)'] = 'absen/C_Absen/ambilAbsen/$1';
 $route['absen'] = 'absen/C_Absen/pilihRuanganAbsen';
 $route['absen/laporanabsen'] = 'absen/C_Absen/laporanAbsen';
 $route['absen/laporanabsen/detail/(:any)'] = 'absen/C_Absen/laporanAbsenDetail/$1';
+$route['absen/laporanabsen/detail/downloadxls/(:any)'] = 'absen/C_Absen/laporanAbsenDetailXls/$1';
