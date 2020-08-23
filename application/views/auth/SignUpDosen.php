@@ -12,12 +12,12 @@
                                     <input type="text" class="form-control" name="nama_dosen" id="exampleFormControlInput1" placeholder="Masukan nama dosen" required>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <!-- <div class="col-6">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput2">NIP</label>
                                     <input type="text" class="form-control" name="nip" id="exampleFormControlInput2" placeholder="Masukan NIP" required>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput3">Password</label>
@@ -42,7 +42,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>Nama Dosen</th>
-                                <th>NIP</th>
+                                <!-- <th>NIP</th> -->
                                 <th>Opsi</th>
                             </tr>
                         </thead>
@@ -52,7 +52,7 @@
                                 foreach ($dosen as $k) : ?>
                                 <tr>
                                     <td><?= $k['nama_dosen'] ?></td>
-                                    <td><?= $k['nip'] ?></td>
+                                    <!-- <td><?= $k['nip'] ?></td> -->
                                     <td>
                                         <div class="row">
                                             <button class="btn btn-primary btn-sm edit" ids="<?= $k['id_mst_dosen'] ?>">
