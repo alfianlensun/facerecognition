@@ -1,8 +1,8 @@
 <?php
-    $file="laporanabsen".date("Y/m/d His").".xls";
+    // $file="laporanabsen".date("Y/m/d His").".xls";
 
-    header("Content-type: application/vnd.ms-excel");
-    header("Content-Disposition: attachment; filename=$file");
+    // header("Content-type: application/vnd.ms-excel");
+    // header("Content-Disposition: attachment; filename=$file");
 
 ?>
 <table class="table datatables dt-responsive" border="1" style="border-collapse: collapse;">

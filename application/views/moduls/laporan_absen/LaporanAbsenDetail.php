@@ -3,12 +3,12 @@
         <div class="row">
             <div class="col-12 p-4" style="border-radius: 20px; background-color: #4e73df10">
                 
-                <form class="row" method="post" action="<?= base_url('absen/laporanabsen/detail/7') ?>">
+                <form class="row" method="post" action="<?= base_url('absen/laporanabsen/detail/'.$idkelas) ?>">
                     <div class="col">
                     <h6><i class="fa fa-list pr-2"></i> Kelas</h6>
                     </div>
                     <div class="col-3">
-                        <select name="id_mst_kelas" id="" class="form-control-sm form-control custom-select" style=" padding:0!important; padding-left:20px !important; " required>
+                        <select name="id_mst_mata_kuliah" id="" class="form-control-sm form-control custom-select" style=" padding:0!important; padding-left:20px !important; " required>
                             <option value="all">Semua</option>
                             <?php foreach ($mk as $k): $i=0?>
                                 <option value="<?= $k['id_mst_mata_kuliah'] ?>" ><?= $k['nama_mata_kuliah'] ?></option>
@@ -44,7 +44,7 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <a href="<?= base_url('absen/laporanabsen/detail/downloadxls/1') ?>" class="btn btn-success" target="blank">Download XLS <i class="fa fa-file-excel"></i></a>
+                    <a href="<?= base_url('absen/laporanabsen/downloadxls/'.$idkelas.'/'.base64_encode(json_encode($this->input->post()))) ?>" class="btn btn-success" target="blank">Download XLS <i class="fa fa-file-excel"></i></a>
                 </div>
             </div>
         </div>

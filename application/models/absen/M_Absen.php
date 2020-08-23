@@ -59,7 +59,7 @@ class M_Absen extends CI_Model {
         ]);
     }
 
-    public function getLaporanAbsensi($id_mst_kelas){
+    public function getLaporanAbsensi($id_mst_kelas, $datapost = null){
         $datakelas = $this->db->select('nama_kelas')
                                 ->from('mst_kelas')
                                 ->where('active', 1)
@@ -74,6 +74,19 @@ class M_Absen extends CI_Model {
         if ($this->input->post('date')){
             $this->db->where('date(a.jam_absen)', $this->input->post('date'));
         }
+        // // dd($this->input->post('date'));
+
+        if ($this->input->post('id_mst_mata_kuliah') && $this->input->post('id_mst_mata_kuliah') != 'all'){
+            $this->db->where('a.id_mst_mata_kuliah', $this->input->post('id_mst_mata_kuliah'));
+        }
+        if ($datapost != null){
+            $this->db->where('date(a.jam_absen)', $datapost['date']);
+            if (isset($datapost['id_mst_mata_kuliah']) && $datapost['id_mst_mata_kuliah'] != 'all'){
+                $this->db->where('a.id_mst_mata_kuliah', $datapost['id_mst_mata_kuliah']);
+            }
+        }
+
+        
         
         return $this->db->get()->result_array();
                             

@@ -149,6 +149,7 @@ class C_Absen extends MY_Controller {
 
     public function laporanAbsenDetail($idkelas){
         $this->validate();
+        $data['idkelas'] = $idkelas;
         $absensi = $this->absen->getLaporanAbsensi($idkelas);
         $temp = [];
         foreach ($absensi as $a){
@@ -161,6 +162,7 @@ class C_Absen extends MY_Controller {
             }
 
         }
+
         $data['absenDetail'] = [];
         foreach ($temp as $tmp){
             $data['absenDetail'][] = $tmp;
@@ -170,12 +172,17 @@ class C_Absen extends MY_Controller {
 
         $this->render('moduls/laporan_absen/LaporanAbsenDetail', $data, [
             'title' => 'Data absensi'
-        ]);   
+        ]);
     }
 
-    public function laporanAbsenDetailXls($idkelas){
+    public function laporanAbsenDetailXls($idkelas,$datapost){
         $this->validate();
-        $absensi = $this->absen->getLaporanAbsensi($idkelas);
+        $datapostdec = null;
+        if (count(json_decode(base64_decode($datapost),true)) > 0){
+            $datapostdec = json_decode(base64_decode($datapost),true);
+        }
+        $absensi = $this->absen->getLaporanAbsensi($idkelas, $datapostdec);
+
         $temp = [];
         foreach ($absensi as $a){
             if (!isset($temp[$a['id_mst_mahasiswa'].'-'.$a['id_mst_mata_kuliah']])){
