@@ -267,12 +267,13 @@
                                                 .withFaceLandmarks()
                                                 // .withFaceExpressions()
                                                 .withFaceDescriptor()
-                // console.log(detection.descriptor)
+                console.log(detection)
                 if (detection.descriptor !== undefined){
+                    
                     descriptions.push(new faceapi.LabeledFaceDescriptors(user.id_mst_auth.toString(), [detection.descriptor]))
                 }
             }
-            // console.log(label)
+            console.log('finish load image')
             return descriptions
         } catch(err){
             console.log('error while load image ', err)
