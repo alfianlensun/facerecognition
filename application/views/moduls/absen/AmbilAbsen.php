@@ -266,7 +266,9 @@
                                                 // .withFaceExpressions()
                                                 .withFaceDescriptor()
                 // console.log(detection.descriptor)
-                descriptions.push(new faceapi.LabeledFaceDescriptors(user.id_mst_auth.toString(), [detection.descriptor]))
+                if (detection.descriptor !== undefined){
+                    descriptions.push(new faceapi.LabeledFaceDescriptors(user.id_mst_auth.toString(), [detection.descriptor]))
+                }
             }
             // console.log(label)
             return descriptions
